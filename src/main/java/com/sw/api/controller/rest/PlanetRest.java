@@ -8,6 +8,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
+import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.*;
+
 @RestController
 @RequestMapping("/planet")
 public class PlanetRest {
@@ -19,24 +23,15 @@ public class PlanetRest {
     }
 
     @PostMapping
-    PlanetEntity add(PlanetEntity planetEntity ) {
+    PlanetEntity save(@RequestBody PlanetEntity planetEntity ) {
         return planetService.save( planetEntity );
     }
 
     @GetMapping()
-    Page<PlanetEntity> find(String name, Pageable pageable) {
+    Page<PlanetEntity> find(PlanetEntity name, Pageable pageable ) {
 
-        var person = new PlanetEntity();
-        person.setName(name);
 
-        ExampleMatcher matcher = ExampleMatcher.matching()
-                .withIgnorePaths("name")
-                .withIncludeNullValues()
-                .withStringMatcher(ExampleMatcher.StringMatcher.ENDING);
-
-        Example<PlanetEntity> example = Example.of(person, matcher);
-
-        return planetService.find(example, pageable);
+        return planetService.find(name, pageable );
     }
 
     @GetMapping("/{id}")

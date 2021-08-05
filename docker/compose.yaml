@@ -4,7 +4,11 @@ services:
 #    build: .
 #    ports:
 #      - "5000:5000"
-  redis:
-    image: "redis:alpine"
+  mongo:
+    image: "mongo"
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
     ports:
-      - "6379:6379"
+      - "27017:27017"
