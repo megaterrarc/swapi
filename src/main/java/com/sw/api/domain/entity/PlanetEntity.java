@@ -1,7 +1,6 @@
 package com.sw.api.domain.entity;
 
 import lombok.*;
-import lombok.experimental.Accessors;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 

@@ -2,15 +2,9 @@ package com.sw.api.controller.rest;
 
 import com.sw.api.data.service.PlanetService;
 import com.sw.api.domain.entity.PlanetEntity;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-
-import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.*;
 
 @RestController
 @RequestMapping("/planet")
