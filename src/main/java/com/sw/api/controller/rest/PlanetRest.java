@@ -2,14 +2,11 @@ package com.sw.api.controller.rest;
 
 import com.sw.api.data.service.PlanetService;
 import com.sw.api.domain.entity.PlanetEntity;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/planet")
@@ -27,20 +24,28 @@ public class PlanetRest {
     }
 
     @GetMapping()
-    List<PlanetEntity> find() {
-        return planetService.find();
+    Page<PlanetEntity> find(String name, Pageable pageable) {
+
+        var person = new PlanetEntity();
+        person.setName(name);
+
+        ExampleMatcher matcher = ExampleMatcher.matching()
+                .withIgnorePaths("name")
+                .withIncludeNullValues()
+                .withStringMatcher(ExampleMatcher.StringMatcher.ENDING);
+
+        Example<PlanetEntity> example = Example.of(person, matcher);
+
+        return planetService.find(example, pageable);
     }
 
-    @GetMapping()
-    List<PlanetEntity> findByName(String name) {
-        return planetService.findByName(name);
+    @GetMapping("/{id}")
+    PlanetEntity findById( @PathVariable(name = "id") String id) {
+         return  planetService.findById(id).get();
     }
 
-    List<PlanetEntity> findById(String id) {
-        return planetService.findByName(id);
-    }
-
-    void deleteById(String id) {
+    @DeleteMapping("/{id}")
+    void deleteById(@PathVariable("id") String id) {
         planetService.deleteById(id);
     }
 
