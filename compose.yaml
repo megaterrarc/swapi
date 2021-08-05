@@ -11,6 +11,9 @@ services:
       SPRING_DATA_MONGODB_PASSWORD: example
     ports:
       - "8080:8080"
+    depends_on:
+      mongo:
+        condition: service_started
   mongo:
     image: "mongo"
     restart: always

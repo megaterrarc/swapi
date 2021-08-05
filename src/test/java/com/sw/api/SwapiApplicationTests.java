@@ -58,9 +58,7 @@ class SwapiApplicationTests {
     }
 
 
-    @DisplayName("given object to save"
-            + " when save object using MongoDB template"
-            + " then object is saved")
+    @DisplayName("Adicionar um planeta (com nome, clima e terreno)")
     @Test
     void testRoutePostPlanet() throws Exception {
 
@@ -68,8 +66,6 @@ class SwapiApplicationTests {
         planet.setName("okokok");
         planet.setClimate("okokok-climate");
         planet.setGround("okokok-ground");
-        planet.setId("okokok-ground");
-        planet.setQtdFilms(0);
 
         this.getMockMvc().perform(
                 post("/planet").contentType(MediaType.APPLICATION_JSON)
@@ -78,8 +74,8 @@ class SwapiApplicationTests {
                 .andExpect(status().isCreated())
                 .andExpect( jsonPath("$.id").value(Matchers.notNullValue()) )
                 .andExpect( jsonPath("$.climate").value("okokok-climate") )
-                .andExpect( jsonPath("$.ground").value("okokok-ground") );
-               // .andExpect( jsonPath("$.qtdFilms").value( Matchers.greaterThan(0)) );
+                .andExpect( jsonPath("$.ground").value("okokok-ground") )
+                .andExpect( jsonPath("$.name").value("okokok") );
     }
 
 }
