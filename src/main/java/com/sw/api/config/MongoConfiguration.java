@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 
 @Configuration
 @EnableMongoRepositories(basePackages = "com.sw.api.data.repository")
-public class RedisConfiguration {
+public class MongoConfiguration {
 
 
 }
