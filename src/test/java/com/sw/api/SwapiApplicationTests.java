@@ -93,9 +93,9 @@ class SwapiApplicationTests {
         ).andDo(print()).andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
                 .andExpect( jsonPath("$.id").value(Matchers.notNullValue()) )
-                .andExpect( jsonPath("$.climate").value("okokok-climate") )
-                .andExpect( jsonPath("$.ground").value("okokok-ground") )
-                .andExpect( jsonPath("$.name").value("okokok") )
+                .andExpect( jsonPath("$.climate").value("arid") )
+                .andExpect( jsonPath("$.ground").value("desert") )
+                .andExpect( jsonPath("$.name").value("Tatooine") )
                 .andExpect( jsonPath("$.qtdFilms").value( Matchers.greaterThan(0)) );
     }
 

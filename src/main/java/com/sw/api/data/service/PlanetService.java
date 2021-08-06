@@ -23,7 +23,7 @@ public class PlanetService {
        this.planetRepository = planetRepository;
    }
 
-   public PlanetEntity save(@Nullable PlanetEntity planetEntity ) {
+   public PlanetEntity save(@Nullable PlanetEntity planetEntity ) throws InterruptedException {
 
        Integer qtdFilms = planetRepository.findApiQtdFilmsByPlanet(planetEntity.getName());
 
@@ -51,7 +51,7 @@ public class PlanetService {
         planetRepository.deleteById( id );
    }
 
-   public Page<PlanetEntity> findApiAll(Pageable pageable) {
+   public Page<PlanetEntity> findApiAll(Pageable pageable) throws InterruptedException {
        return planetRepository.findAllApi(pageable);
    }
 
