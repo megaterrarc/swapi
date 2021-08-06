@@ -30,7 +30,7 @@ public class PlanetRest {
         return planetService.find(name, pageable );
     }
 
-    @GetMapping("/fomapi")
+    @GetMapping("/fromapi")
     @ResponseStatus(HttpStatus.OK)
     Page<PlanetEntity> find( Pageable pageable ) throws InterruptedException {
         return planetService.findApiAll( pageable );

@@ -90,7 +90,7 @@ public class PlanetApiRepositoryImpl implements PlanetApiRepository {
         HttpEntity<?> request = new HttpEntity<>(null,null);
 
         ResponseEntity<PlanetApiFilms> planetFilms = restTemplate
-                .exchange( URL_FILMS, HttpMethod.GET , request, PlanetApiFilms.class);
+                .exchange(URL_FILMS, HttpMethod.GET, request, PlanetApiFilms.class);
 
         if ( planetFilms.getStatusCode() == HttpStatus.TOO_MANY_REQUESTS) {
             sleep( Long.parseLong(Objects.requireNonNull(planetFilms.getHeaders().getFirst("Retry-After"))) + 3L  );

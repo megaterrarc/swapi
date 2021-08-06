@@ -121,6 +121,28 @@ class SwapiApplicationTests {
                 .andExpect( jsonPath("$.totalElements").value( Matchers.greaterThan(0)) );
     }
 
+    @DisplayName("Listar planetas da API")
+    @Test
+    void testRouteGetPlanetApiReturnPlanetPage() throws Exception {
+
+        var planet = new PlanetEntity()
+                .setName("okokok-2")
+                .setClimate("okokok-climate-2")
+                .setGround("okokok-ground-2");
+
+        this.getMockMvc().perform(
+                post("/planet").contentType(MediaType.APPLICATION_JSON)
+                        .content(getMapper().writeValueAsString(planet))
+        ).andDo(print()).andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated());
+
+        this.getMockMvc().perform(
+                get("/planet/fromapi").contentType(MediaType.APPLICATION_JSON)
+        ).andDo(print()).andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect( jsonPath("$.totalElements").value( Matchers.greaterThan(0)) );
+    }
+
 
     @DisplayName("Buscar por nome no banco de dados")
     @Test
