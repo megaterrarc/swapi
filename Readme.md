@@ -6,7 +6,7 @@
      Maven
      Docker
   - Compile
-    mvn clean install
+    mvnw clean install
   
 ***Init App***
  

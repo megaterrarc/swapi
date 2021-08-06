@@ -24,6 +24,11 @@ public class PlanetService {
    }
 
    public PlanetEntity save(@Nullable PlanetEntity planetEntity ) {
+
+       Integer qtdFilms = planetRepository.findApiQtdFilmsByPlanet(planetEntity.getName());
+
+       planetEntity.setQtdFilms( qtdFilms );
+
        return planetRepository.save( planetEntity );
    }
 
@@ -46,6 +51,8 @@ public class PlanetService {
         planetRepository.deleteById( id );
    }
 
-
+   public Page<PlanetEntity> findApiAll(Pageable pageable) {
+       return planetRepository.findAllApi(pageable);
+   }
 
 }

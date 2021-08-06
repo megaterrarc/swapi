@@ -5,6 +5,7 @@ import com.sw.api.domain.entity.PlanetEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -29,10 +30,17 @@ public class PlanetRest {
         return planetService.find(name, pageable );
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/fomapi")
     @ResponseStatus(HttpStatus.OK)
-    PlanetEntity findById( @PathVariable(name = "id") String id) {
-         return  planetService.findById(id).get();
+    Page<PlanetEntity> find( Pageable pageable ) {
+        return planetService.findApiAll( pageable );
+    }
+
+    @GetMapping("/{id}")
+    ResponseEntity<PlanetEntity> findById(@PathVariable(name = "id") String id) {
+        return planetService.findById(id).isPresent() ?
+                ResponseEntity.ok( planetService.findById(id).get() )
+                : ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")

@@ -2,6 +2,7 @@ package com.sw.api.domain.entity;
 
 import lombok.*;
 import lombok.experimental.Accessors;
+import lombok.extern.jackson.Jacksonized;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -11,7 +12,9 @@ import java.io.Serializable;
 @EqualsAndHashCode(of = "id")
 @AllArgsConstructor
 @NoArgsConstructor
-@Accessors
+@Accessors(chain = true)
+@Jacksonized
+@Builder
 @Document
 public class PlanetEntity implements Serializable {
 
