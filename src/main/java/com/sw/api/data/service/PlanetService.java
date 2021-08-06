@@ -25,9 +25,9 @@ public class PlanetService {
 
    public PlanetEntity save(@Nullable PlanetEntity planetEntity ) throws InterruptedException {
 
-       Integer qtdFilms = planetRepository.findApiQtdFilmsByPlanet(planetEntity.getName());
+     //  Integer qtdFilms = planetRepository.findApiQtdFilmsByPlanet(planetEntity.getName());
 
-       planetEntity.setQtdFilms( qtdFilms );
+     //  planetEntity.setQtdFilms( qtdFilms );
 
        return planetRepository.save( planetEntity );
    }
