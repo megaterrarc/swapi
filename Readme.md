@@ -1,11 +1,16 @@
 
 ***Build App***
   
-  - Riquered
-     Java 11
-     Maven
-     Docker
+  - Requered
+    
+    Java 11
+    
+    Maven
+
+    Docker
+    
   - Compile
+    
     mvnw clean install
   
 ***Init App***
