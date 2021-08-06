@@ -6,8 +6,8 @@ import org.springframework.data.domain.Pageable;
 
 public interface PlanetApiRepository {
 
-      Page<PlanetEntity> findAllApi(Pageable pageable);
-      Integer findApiQtdFilmsByPlanet(String planetName);
-      Page<PlanetEntity> findAllApi(String name, Pageable pageable);
+      Page<PlanetEntity> findAllApi(Pageable pageable) throws InterruptedException;
+      Integer findApiQtdFilmsByPlanet(String planetName) throws InterruptedException;
+      Page<PlanetEntity> findAllApi(String name, Pageable pageable) throws InterruptedException;
 
 }

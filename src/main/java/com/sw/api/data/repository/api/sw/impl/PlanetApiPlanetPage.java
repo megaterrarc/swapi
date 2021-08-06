@@ -16,8 +16,8 @@ import java.util.List;
 @Builder
 public class PlanetApiPlanetPage {
 
-    private Integer total_records;
-    private Integer total_pages;
+    private Integer total_records = 0;
+    private Integer total_pages = 0;
     private List<PlanetApi> results = Collections.emptyList();
 
     @Getter @Setter

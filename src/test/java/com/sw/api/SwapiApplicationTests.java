@@ -93,9 +93,9 @@ class SwapiApplicationTests {
         ).andDo(print()).andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
                 .andExpect( jsonPath("$.id").value(Matchers.notNullValue()) )
-                .andExpect( jsonPath("$.climate").value("okokok-climate") )
-                .andExpect( jsonPath("$.ground").value("okokok-ground") )
-                .andExpect( jsonPath("$.name").value("okokok") )
+                .andExpect( jsonPath("$.climate").value("arid") )
+                .andExpect( jsonPath("$.ground").value("desert") )
+                .andExpect( jsonPath("$.name").value("Tatooine") )
                 .andExpect( jsonPath("$.qtdFilms").value( Matchers.greaterThan(0)) );
     }
 
@@ -116,6 +116,28 @@ class SwapiApplicationTests {
 
         this.getMockMvc().perform(
                 get("/planet").contentType(MediaType.APPLICATION_JSON)
+        ).andDo(print()).andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect( jsonPath("$.totalElements").value( Matchers.greaterThan(0)) );
+    }
+
+    @DisplayName("Listar planetas da API")
+    @Test
+    void testRouteGetPlanetApiReturnPlanetPage() throws Exception {
+
+        var planet = new PlanetEntity()
+                .setName("okokok-2")
+                .setClimate("okokok-climate-2")
+                .setGround("okokok-ground-2");
+
+        this.getMockMvc().perform(
+                post("/planet").contentType(MediaType.APPLICATION_JSON)
+                        .content(getMapper().writeValueAsString(planet))
+        ).andDo(print()).andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated());
+
+        this.getMockMvc().perform(
+                get("/planet/fromapi").contentType(MediaType.APPLICATION_JSON)
         ).andDo(print()).andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect( jsonPath("$.totalElements").value( Matchers.greaterThan(0)) );

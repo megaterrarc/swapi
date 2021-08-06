@@ -20,7 +20,7 @@ public class PlanetRest {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    PlanetEntity save(@RequestBody PlanetEntity planetEntity ) {
+    PlanetEntity save(@RequestBody PlanetEntity planetEntity ) throws InterruptedException {
         return planetService.save( planetEntity );
     }
 
@@ -30,9 +30,9 @@ public class PlanetRest {
         return planetService.find(name, pageable );
     }
 
-    @GetMapping("/fomapi")
+    @GetMapping("/fromapi")
     @ResponseStatus(HttpStatus.OK)
-    Page<PlanetEntity> find( Pageable pageable ) {
+    Page<PlanetEntity> find( Pageable pageable ) throws InterruptedException {
         return planetService.findApiAll( pageable );
     }
 
