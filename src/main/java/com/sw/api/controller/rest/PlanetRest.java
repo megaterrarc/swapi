@@ -2,14 +2,11 @@ package com.sw.api.controller.rest;
 
 import com.sw.api.data.service.PlanetService;
 import com.sw.api.domain.entity.PlanetEntity;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/planet")
@@ -22,25 +19,33 @@ public class PlanetRest {
     }
 
     @PostMapping
-    PlanetEntity add(PlanetEntity planetEntity ) {
+    @ResponseStatus(HttpStatus.CREATED)
+    PlanetEntity save(@RequestBody PlanetEntity planetEntity ) {
         return planetService.save( planetEntity );
     }
 
     @GetMapping()
-    List<PlanetEntity> find() {
-        return planetService.find();
+    @ResponseStatus(HttpStatus.OK)
+    Page<PlanetEntity> find(PlanetEntity name, Pageable pageable ) {
+        return planetService.find(name, pageable );
     }
 
-    @GetMapping()
-    List<PlanetEntity> findByName(String name) {
-        return planetService.findByName(name);
+    @GetMapping("/fomapi")
+    @ResponseStatus(HttpStatus.OK)
+    Page<PlanetEntity> find( Pageable pageable ) {
+        return planetService.findApiAll( pageable );
     }
 
-    List<PlanetEntity> findById(String id) {
-        return planetService.findByName(id);
+    @GetMapping("/{id}")
+    ResponseEntity<PlanetEntity> findById(@PathVariable(name = "id") String id) {
+        return planetService.findById(id).isPresent() ?
+                ResponseEntity.ok( planetService.findById(id).get() )
+                : ResponseEntity.notFound().build();
     }
 
-    void deleteById(String id) {
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    void deleteById(@PathVariable("id") String id) {
         planetService.deleteById(id);
     }
 

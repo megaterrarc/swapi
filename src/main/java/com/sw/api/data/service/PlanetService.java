@@ -3,11 +3,16 @@ package com.sw.api.data.service;
 
 import com.sw.api.data.repository.PlanetRepository;
 import com.sw.api.domain.entity.PlanetEntity;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.annotation.Nullable;
+import java.util.Optional;
+
+import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.contains;
 
 @Service
 public class PlanetService {
@@ -18,31 +23,36 @@ public class PlanetService {
        this.planetRepository = planetRepository;
    }
 
-   public PlanetEntity save( PlanetEntity planetEntity ) {
+   public PlanetEntity save(@Nullable PlanetEntity planetEntity ) {
+
+       Integer qtdFilms = planetRepository.findApiQtdFilmsByPlanet(planetEntity.getName());
+
+       planetEntity.setQtdFilms( qtdFilms );
+
        return planetRepository.save( planetEntity );
    }
 
-   public List<PlanetEntity> find() {
-      var  planetEntities = new ArrayList<PlanetEntity>();
-      planetRepository.findAll().forEach(planetEntities::add);
-      return planetEntities;
+   public Page<PlanetEntity> find(@Nullable PlanetEntity planet, Pageable pageable) {
+
+       var matcher = ExampleMatcher.matching().
+            withMatcher("name", contains()).withIgnoreCase();
+
+       Example<PlanetEntity> example = Example.of(planet, matcher);
+
+       return planetRepository.findAll(example, pageable);
+
    }
 
-   public List<PlanetEntity> findByName(String name) {
-       var  planetEntities = new ArrayList<PlanetEntity>();
-       planetRepository.findAll().forEach(planetEntities::add);
-       return planetEntities;
+   public Optional<PlanetEntity> findById(@Nullable String id) {
+       return planetRepository.findById(id);
    }
 
-   public List<PlanetEntity> findById(String id) {
-       var  planetEntities = new ArrayList<PlanetEntity>();
-       planetRepository.findById(id).ifPresent( planetEntities::add );
-       return planetEntities;
-   }
-
-    public void deleteById(String id) {
+   public void deleteById(@Nullable String id) {
         planetRepository.deleteById( id );
-    }
+   }
 
+   public Page<PlanetEntity> findApiAll(Pageable pageable) {
+       return planetRepository.findAllApi(pageable);
+   }
 
 }
